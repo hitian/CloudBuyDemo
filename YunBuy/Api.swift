@@ -10,6 +10,10 @@ import Foundation
 import IDZSwiftCommonCrypto
 
 class Api {
+    static let _instance = Api()
+    static func instance() -> Api {
+        return _instance
+    }
     //let baseURL = "http://127.0.0.1:3000"
     let baseURL = "http://ym.shop.ymwlw.com/v1"
     let defaultSession: URLSession
@@ -80,13 +84,42 @@ class Api {
         }
     }
     
-    func doOrder(info: OrderInfo, completion: @escaping (String, String) -> Bool) {
+    func doOrder(info: OrderInfo, completion: @escaping (Bool, String, String) -> Void) {
         let url = "/scan/order"
+        let data = try! JSONEncoder().encode(info)
+        //let jsonString = String(data: data, encoding: .utf8)!
+        doRequest(url: url, data: data) { (isOk, response) in
+            print("order response: \(response)")
+            if let _response = response as? [String: Any], let code = _response["code"] as? Int {
+                if code == 0, let responseData = _response["data"] as? [String: String], let amount = responseData["amount"], let orderId = responseData["orderId"] {
+                    completion(true, orderId, amount)
+                    return
+                }
+                completion(false, "\(_response["message"] ?? "")", "")
+                return
+            }
+            completion(false, "request error.", "")
+        }
         
     }
-    func doPay(orderId: String, completion: @escaping () -> Bool) {
+    func doPay(orderId: String, completion: @escaping (Bool, String) -> Void) {
         let url = "/balance/pay"
-        
+        let payPassword = Account().readPayPassword()
+        let payPasswordMD5 = hexString(fromArray: (Digest(algorithm: .md5).update(string: payPassword!)?.final())!)
+        let payInfo = PayInfo(orderId: orderId, password: payPasswordMD5)
+        let data = try! JSONEncoder().encode(payInfo)
+        doRequest(url: url, data: data) { (isSuccess, response) in
+            print("pay response: \(response)")
+            if let _response = response as? [String: Any], let code = _response["code"] as? Int {
+                if code == 0, let responseData = _response["data"] as? [String: String], let status = responseData["status"], let orderId = responseData["orderId"] {
+                    completion(true, orderId + "|" + status)
+                    return
+                }
+                completion(false, "\(_response["message"] ?? "")")
+                return
+            }
+            completion(false, "request error.")
+        }
     }
     
     private func doRequest(url: String, data: Data?, completion: @escaping (Bool, Any)-> Void ) {
@@ -135,7 +168,7 @@ class Api {
     }
 }
 
-struct OrderInfo {
+struct OrderInfo: Encodable {
     var machNo: String
     var payType: String
     var orderNo: String
@@ -143,4 +176,9 @@ struct OrderInfo {
     var goodsPrice: String
     var goodsNo: String
     var merchantNo: String
+}
+
+struct PayInfo: Encodable {
+    var orderId: String
+    var password: String
 }

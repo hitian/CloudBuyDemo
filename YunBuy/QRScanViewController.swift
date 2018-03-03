@@ -154,7 +154,7 @@ class QRScanViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
                 machNo: info["machNo"] ?? "",
                 payType: info["payType"] ?? "",
                 orderNo: info["orderNo"] ?? "",
-                subject: info["subject"] ?? "",
+                subject: (info["subject"] ?? "").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!,
                 goodsPrice: info["goodsPrice"] ?? "",
                 goodsNo: info["goodsNo"] ?? "",
                 merchantNo: info["merchantNo"] ?? ""
@@ -207,10 +207,25 @@ class QRScanViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
     
     func doPay(_ orderInfo: OrderInfo) {
         print("do pay. \(orderInfo)")
+        let api = Api.instance()
+        api.doOrder(info: orderInfo) { (isSuccess, orderId, amount) in
+            if !isSuccess {
+                self.showMessageAndDismiss("创建订单失败")
+                return
+            }
+            
+            api.doPay(orderId: orderId, completion: { (isSuccess, result) in
+                if !isSuccess {
+                    self.showMessageAndDismiss("创建支付失败")
+                    return
+                }
+                self.done()
+            })
+        }
     }
     
     func showMessageAndDismiss(_ message: String) {
-        let alert = UIAlertController.init(title: "验证失败", message: message, preferredStyle: .alert)
+        let alert = UIAlertController.init(title: "Notice", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction.init(title: "OK", style: .default, handler: { (action) in
             self.done()
         }))
@@ -236,3 +251,4 @@ class QRScanViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
         self.dismiss(animated: true, completion: nil)
     }
 }
+
