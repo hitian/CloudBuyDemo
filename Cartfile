@@ -1,2 +1,3 @@
 github "evgenyneu/keychain-swift" ~> 10.0
+github "iosdevzone/IDZSwiftCommonCrypto"
 

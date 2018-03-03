@@ -15,7 +15,22 @@ struct Account {
         return KeychainSwift().get("username");
     }
     
+    func setUsername(username: String) {
+        KeychainSwift().set(username, forKey: "username")
+    }
+    
     func readPassword() -> String? {
         return KeychainSwift().get("password");
+    }
+    func setPassword(password: String) {
+        KeychainSwift().set(password, forKey: "password")
+    }
+    
+    func getToken() -> String? {
+        return KeychainSwift().get("token");
+    }
+    
+    func setToken(token: String) {
+        KeychainSwift().set(token, forKey: "token")
     }
 }

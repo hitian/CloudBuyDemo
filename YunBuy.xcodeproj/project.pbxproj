@@ -14,7 +14,9 @@
 		080BDEA320490B0D00CD3235 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 080BDEA120490B0D00CD3235 /* LaunchScreen.storyboard */; };
 		080BDEAB20490DC600CD3235 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080BDEAA20490DC600CD3235 /* Account.swift */; };
 		080BDEAE2049110100CD3235 /* KeychainSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 080BDEAD2049110100CD3235 /* KeychainSwift.framework */; };
-		080BDEB1204913C000CD3235 /* AccountSetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080BDEB0204913C000CD3235 /* AccountSetViewController.swift */; };
+		94DC8DC92049D07A00F93135 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DC8DC82049D07A00F93135 /* AccountViewController.swift */; };
+		94DC8DCB204A808800F93135 /* Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DC8DCA204A808800F93135 /* Api.swift */; };
+		94DC8DCD204AA30700F93135 /* IDZSwiftCommonCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94DC8DCC204AA30600F93135 /* IDZSwiftCommonCrypto.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,7 +29,9 @@
 		080BDEA420490B0D00CD3235 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		080BDEAA20490DC600CD3235 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		080BDEAD2049110100CD3235 /* KeychainSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KeychainSwift.framework; path = Carthage/Build/iOS/KeychainSwift.framework; sourceTree = "<group>"; };
-		080BDEB0204913C000CD3235 /* AccountSetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSetViewController.swift; sourceTree = "<group>"; };
+		94DC8DC82049D07A00F93135 /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
+		94DC8DCA204A808800F93135 /* Api.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Api.swift; sourceTree = "<group>"; };
+		94DC8DCC204AA30600F93135 /* IDZSwiftCommonCrypto.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IDZSwiftCommonCrypto.framework; path = Carthage/Build/iOS/IDZSwiftCommonCrypto.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,6 +40,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				080BDEAE2049110100CD3235 /* KeychainSwift.framework in Frameworks */,
+				94DC8DCD204AA30700F93135 /* IDZSwiftCommonCrypto.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -64,12 +69,13 @@
 			children = (
 				080BDE9820490B0D00CD3235 /* AppDelegate.swift */,
 				080BDE9A20490B0D00CD3235 /* ViewController.swift */,
-				080BDEB0204913C000CD3235 /* AccountSetViewController.swift */,
 				080BDE9C20490B0D00CD3235 /* Main.storyboard */,
+				94DC8DC82049D07A00F93135 /* AccountViewController.swift */,
 				080BDE9F20490B0D00CD3235 /* Assets.xcassets */,
 				080BDEA120490B0D00CD3235 /* LaunchScreen.storyboard */,
 				080BDEA420490B0D00CD3235 /* Info.plist */,
 				080BDEAA20490DC600CD3235 /* Account.swift */,
+				94DC8DCA204A808800F93135 /* Api.swift */,
 			);
 			path = YunBuy;
 			sourceTree = "<group>";
@@ -77,6 +83,7 @@
 		080BDEAC2049110100CD3235 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				94DC8DCC204AA30600F93135 /* IDZSwiftCommonCrypto.framework */,
 				080BDEAD2049110100CD3235 /* KeychainSwift.framework */,
 			);
 			name = Frameworks;
@@ -158,6 +165,7 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/KeychainSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/IDZSwiftCommonCrypto.framework",
 			);
 			outputPaths = (
 			);
@@ -173,8 +181,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				080BDE9B20490B0D00CD3235 /* ViewController.swift in Sources */,
-				080BDEB1204913C000CD3235 /* AccountSetViewController.swift in Sources */,
 				080BDE9920490B0D00CD3235 /* AppDelegate.swift in Sources */,
+				94DC8DC92049D07A00F93135 /* AccountViewController.swift in Sources */,
+				94DC8DCB204A808800F93135 /* Api.swift in Sources */,
 				080BDEAB20490DC600CD3235 /* Account.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
