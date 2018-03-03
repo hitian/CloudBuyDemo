@@ -44,16 +44,16 @@ class ViewController: UITableViewController {
             self.present(alert, animated: true, completion: nil)
         } else {
             usernameLabel.text = username
-            api.balance(completion: { (isOk, data) in
-                DispatchQueue.main.async {
-                    if isOk {
-                        self.balanceLabel.text = "\(data)"
-                    } else {
-                        print("ERROR: \(data)")
-                        self.balanceLabel.text = "err"
-                    }
-                }
-            })
+//            api.balance(completion: { (isOk, data) in
+//                DispatchQueue.main.async {
+//                    if isOk {
+//                        self.balanceLabel.text = "\(data)"
+//                    } else {
+//                        print("ERROR: \(data)")
+//                        self.balanceLabel.text = "err"
+//                    }
+//                }
+//            })
         }
     }
     

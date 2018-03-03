@@ -17,6 +17,7 @@
 		94DC8DC92049D07A00F93135 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DC8DC82049D07A00F93135 /* AccountViewController.swift */; };
 		94DC8DCB204A808800F93135 /* Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DC8DCA204A808800F93135 /* Api.swift */; };
 		94DC8DCD204AA30700F93135 /* IDZSwiftCommonCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94DC8DCC204AA30600F93135 /* IDZSwiftCommonCrypto.framework */; };
+		94DC8DCF204AC9D100F93135 /* QRScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DC8DCE204AC9D100F93135 /* QRScanViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		94DC8DC82049D07A00F93135 /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		94DC8DCA204A808800F93135 /* Api.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Api.swift; sourceTree = "<group>"; };
 		94DC8DCC204AA30600F93135 /* IDZSwiftCommonCrypto.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IDZSwiftCommonCrypto.framework; path = Carthage/Build/iOS/IDZSwiftCommonCrypto.framework; sourceTree = "<group>"; };
+		94DC8DCE204AC9D100F93135 /* QRScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScanViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +78,7 @@
 				080BDEA420490B0D00CD3235 /* Info.plist */,
 				080BDEAA20490DC600CD3235 /* Account.swift */,
 				94DC8DCA204A808800F93135 /* Api.swift */,
+				94DC8DCE204AC9D100F93135 /* QRScanViewController.swift */,
 			);
 			path = YunBuy;
 			sourceTree = "<group>";
@@ -180,6 +183,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94DC8DCF204AC9D100F93135 /* QRScanViewController.swift in Sources */,
 				080BDE9B20490B0D00CD3235 /* ViewController.swift in Sources */,
 				080BDE9920490B0D00CD3235 /* AppDelegate.swift in Sources */,
 				94DC8DC92049D07A00F93135 /* AccountViewController.swift in Sources */,

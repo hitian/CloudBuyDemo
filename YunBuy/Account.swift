@@ -26,6 +26,14 @@ struct Account {
         KeychainSwift().set(password, forKey: "password")
     }
     
+    func readPayPassword() -> String? {
+        return KeychainSwift().get("pay_password")
+    }
+    
+    func setPayPassword(password: String) {
+        KeychainSwift().set(password, forKey: "pay_password")
+    }
+    
     func getToken() -> String? {
         return KeychainSwift().get("token");
     }

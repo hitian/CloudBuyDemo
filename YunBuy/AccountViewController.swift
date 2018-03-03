@@ -27,22 +27,42 @@ class AccountViewController: UITableViewController {
         let username = accountManager.readUsername() ?? ""
         phoneTextField.text = username
         
+//        let loginPassword = accountManager.readPassword()
+//        let payPassword = accountManager.readLoginPassword()
+        
     }
     @IBOutlet weak var phoneTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var payPasswordTextField: UITextField!
     @IBAction func save(_ sender: UIButton) {
-        guard phoneTextField.text != "" else {
+        let username = phoneTextField.text ?? ""
+        guard username != "" else {
             showAlert(text: "Phone number can not be empty!")
             return
         }
         
-        accountManager.setUsername(username: phoneTextField.text ?? "")
-        if let password = passwordTextField.text {
-            accountManager.setPassword(password: password)
+        let loginPassword = passwordTextField.text ?? ""
+        guard loginPassword != "" else {
+            showAlert(text: "Login password can not be empty!")
+            return
         }
+        
+        let payPassword = payPasswordTextField.text ?? ""
+        guard payPassword != "" else {
+            showAlert(text: "Pay password can not be empty!")
+            return
+        }
+        
+        accountManager.setUsername(username: username)
+        accountManager.setPassword(password: loginPassword)
+        accountManager.setPayPassword(password: payPassword)
+        
         //delete token after account info changed.
         accountManager.setToken(token: "")
         
+        let alert = UIAlertController.init(title: "Notice", message: "Saved", preferredStyle: .alert)
+        alert.addAction(UIAlertAction.init(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     func showAlert(text: String) {
