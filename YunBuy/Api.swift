@@ -21,12 +21,24 @@ class Api {
     var sessionConfiguration = URLSessionConfiguration.default
     var tokenString = ""
     
-    init() {
+    var payPassword: String? = nil
+    
+    private init() {
         sessionConfiguration.httpAdditionalHeaders = [
             "User-Agent": "CloudTrade/1.1 (iPhone; iOS 11.2.6; Scale/3.00)",
             "Content-Type": "application/json; charset=utf-8"
         ]
         defaultSession = URLSession(configuration: sessionConfiguration)
+    }
+    
+    public func isPayPasswordOk() -> Bool {
+        return payPassword != nil
+    }
+    
+    public func loadPayPassword() {
+        let password = Account().readPayPassword() ?? "";
+        let passwordMD5 = hexString(fromArray: (Digest(algorithm: .md5).update(string: password)?.final())!)
+        payPassword = passwordMD5
     }
     
     func token(completion: @escaping (String?)-> Void) {
@@ -91,8 +103,8 @@ class Api {
         doRequest(url: url, data: data) { (isOk, response) in
             print("order response: \(response)")
             if let _response = response as? [String: Any], let code = _response["code"] as? Int {
-                if code == 0, let responseData = _response["data"] as? [String: String], let amount = responseData["amount"], let orderId = responseData["orderId"] {
-                    completion(true, orderId, amount)
+                if code == 0, let responseData = _response["data"] as? [String: Any], let amount = responseData["amount"] as? String, let orderId = responseData["orderId"] as? Int {
+                    completion(true, "\(orderId)", amount)
                     return
                 }
                 completion(false, "\(_response["message"] ?? "")", "")
@@ -104,15 +116,13 @@ class Api {
     }
     func doPay(orderId: String, completion: @escaping (Bool, String) -> Void) {
         let url = "/balance/pay"
-        let payPassword = Account().readPayPassword()
-        let payPasswordMD5 = hexString(fromArray: (Digest(algorithm: .md5).update(string: payPassword!)?.final())!)
-        let payInfo = PayInfo(orderId: orderId, password: payPasswordMD5)
+        let payInfo = PayInfo(orderId: orderId, password: payPassword!)
         let data = try! JSONEncoder().encode(payInfo)
         doRequest(url: url, data: data) { (isSuccess, response) in
             print("pay response: \(response)")
             if let _response = response as? [String: Any], let code = _response["code"] as? Int {
-                if code == 0, let responseData = _response["data"] as? [String: String], let status = responseData["status"], let orderId = responseData["orderId"] {
-                    completion(true, orderId + "|" + status)
+                if code == 0, let responseData = _response["data"] as? [String: Any], let status = responseData["status"] as? Int, let orderId = responseData["orderId"] as? Int {
+                    completion(true, "\(orderId)|\(status)")
                     return
                 }
                 completion(false, "\(_response["message"] ?? "")")

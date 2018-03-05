@@ -169,6 +169,11 @@ class QRScanViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
     }
     
     func checkout(_ orderInfo: OrderInfo) {
+        let api = Api.instance()
+        if api.isPayPasswordOk() {
+            doPay(orderInfo)
+            return
+        }
         let authContext = LAContext()
         let myLocalizedReasonString = "Use LA to confirm the payment."
         var authError: NSError?
@@ -176,6 +181,7 @@ class QRScanViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
             if authContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &authError) {
                 authContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: myLocalizedReasonString, reply: { (isSuccess, error) in
                     if isSuccess {
+                        api.loadPayPassword()
                         self.doPay(orderInfo)
                     } else {
                         print("auth failed")
@@ -188,6 +194,7 @@ class QRScanViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
                     if authContext.canEvaluatePolicy(.deviceOwnerAuthentication, error: &authError) {
                         authContext.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: myLocalizedReasonString, reply: { (isSuccess, error) in
                             if isSuccess {
+                                api.loadPayPassword()
                                 self.doPay(orderInfo)
                             } else {
                                 print("auth failed")
@@ -210,13 +217,13 @@ class QRScanViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
         let api = Api.instance()
         api.doOrder(info: orderInfo) { (isSuccess, orderId, amount) in
             if !isSuccess {
-                self.showMessageAndDismiss("创建订单失败")
+                self.showMessageAndDismiss("创建订单失败: \(orderId)")
                 return
             }
             
             api.doPay(orderId: orderId, completion: { (isSuccess, result) in
                 if !isSuccess {
-                    self.showMessageAndDismiss("创建支付失败")
+                    self.showMessageAndDismiss("创建支付失败: \(result)")
                     return
                 }
                 self.done()

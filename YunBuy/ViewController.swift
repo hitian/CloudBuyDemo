@@ -12,7 +12,7 @@ class ViewController: UITableViewController {
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var balanceLabel: UILabel!
     
-    let api = Api()
+    let api = Api.instance()
     
     override func viewDidLoad() {
         super.viewDidLoad()
