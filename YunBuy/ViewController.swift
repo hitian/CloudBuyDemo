@@ -13,12 +13,19 @@ class ViewController: UITableViewController {
     @IBOutlet weak var balanceLabel: UILabel!
     
     let api = Api.instance()
+    let refresh = UIRefreshControl.init()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         print("viewDidLoad")
         balanceLabel.text = "Loading.."
+        
+        refresh.attributedTitle = NSAttributedString.init(string: "下拉刷新")
+        refresh.target(forAction: #selector(doRefresh), withSender: nil)
+        refreshControl = refresh
+        
+        refresh.beginRefreshing()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -30,6 +37,10 @@ class ViewController: UITableViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @objc func doRefresh() {
+        print("do refresh")
     }
 
     
