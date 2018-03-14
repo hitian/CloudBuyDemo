@@ -22,10 +22,8 @@ class ViewController: UITableViewController {
         balanceLabel.text = "Loading.."
         
         refresh.attributedTitle = NSAttributedString.init(string: "下拉刷新")
-        refresh.target(forAction: #selector(doRefresh), withSender: nil)
-        refreshControl = refresh
-        
-        refresh.beginRefreshing()
+        refresh.addTarget(self, action: #selector(doRefresh), for: .valueChanged)
+        tableView.addSubview(refresh)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -41,6 +39,9 @@ class ViewController: UITableViewController {
     
     @objc func doRefresh() {
         print("do refresh")
+        getBalance {
+            self.refresh.endRefreshing()
+        }
     }
 
     
@@ -55,17 +56,22 @@ class ViewController: UITableViewController {
             self.present(alert, animated: true, completion: nil)
         } else {
             usernameLabel.text = username
-            api.balance(completion: { (isOk, data) in
-                DispatchQueue.main.async {
-                    if isOk {
-                        self.balanceLabel.text = "\(data)"
-                    } else {
-                        print("ERROR: \(data)")
-                        self.balanceLabel.text = "err"
-                    }
-                }
-            })
+            getBalance {}
         }
+    }
+    
+    func getBalance(completion: @escaping () -> Void) {
+        api.balance(completion: { (isOk, data) in
+            DispatchQueue.main.async {
+                if isOk {
+                    self.balanceLabel.text = "\(data)"
+                } else {
+                    print("ERROR: \(data)")
+                    self.balanceLabel.text = "err"
+                }
+                completion()
+            }
+        })
     }
     
     func showAccount() {

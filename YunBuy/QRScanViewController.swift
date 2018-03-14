@@ -215,12 +215,13 @@ class QRScanViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
     func doPay(_ orderInfo: OrderInfo) {
         print("do pay. \(orderInfo)")
         let api = Api.instance()
+        textLabel?.text = "正在创建订单。。"
         api.doOrder(info: orderInfo) { (isSuccess, orderId, amount) in
             if !isSuccess {
                 self.showMessageAndDismiss("创建订单失败: \(orderId)")
                 return
             }
-            
+            self.textLabel?.text = "正在支付。。"
             api.doPay(orderId: orderId, completion: { (isSuccess, result) in
                 if !isSuccess {
                     self.showMessageAndDismiss("创建支付失败: \(result)")
