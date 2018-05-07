@@ -108,7 +108,7 @@ class QRScanViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
         case .landscapeLeft:
             return AVCaptureVideoOrientation.landscapeLeft
         case .landscapeRight:
-            return AVCaptureVideoOrientation.landscapeLeft
+            return AVCaptureVideoOrientation.landscapeRight
         case .portraitUpsideDown:
             return AVCaptureVideoOrientation.portraitUpsideDown
         default:

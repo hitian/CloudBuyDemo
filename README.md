@@ -10,6 +10,14 @@
 * 显示订单列表， （官方的API貌似不是很稳定， 暂缓）
 
 
+## INSTALL
+
+```
+carthage update --platform ios
+open YunBuy.xcodeproj
+```
+
+
 ## License
 
 ```
